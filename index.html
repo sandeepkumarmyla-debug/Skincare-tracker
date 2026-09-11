@@ -3,164 +3,124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f7f5">
-<title>Skincare & Medication Tracker — Sep 2026</title>
+<meta name="theme-color" content="#f5f7f5">
+<title>Skin Tracker · September 2026</title>
 <style>
-:root{--bg:#f7f7f5;--card:#fff;--text:#20211f;--muted:#73746f;--line:#e5e5df;--accent:#2f6f5e;--accent2:#e9f3ef;--danger:#a34d45}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.wrap{max-width:760px;margin:auto;padding:18px 14px 40px}
-h1{font-size:25px;margin:5px 0 4px}.sub{color:var(--muted);font-size:14px;margin-bottom:18px}
-.tabs{display:flex;gap:8px;margin-bottom:14px}.tab{flex:1;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;font-weight:700}
-.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
-.panel{display:none}.panel.active{display:block}
-.daynav{display:flex;gap:8px;align-items:center;margin-bottom:12px}.daynav button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px}.datebox{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px}
-.datebox strong{display:block}.datebox span{font-size:12px;color:var(--muted)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:10px 0;padding:14px}
-.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
-.check{width:25px;height:25px;accent-color:var(--accent);flex:none}.info{flex:1;min-width:0}.name{font-weight:700}.detail{font-size:12px;color:var(--muted);margin-top:3px}.time{font-size:12px;color:var(--accent);font-weight:700}
-.skip{opacity:.5}.note{font-size:12px;background:#fff8e8;border:1px solid #f0dfb0;padding:10px;border-radius:11px;color:#6f5a24;margin-top:8px}
-.progress{height:9px;background:#ecece7;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--accent);width:0}
-.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:24px}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:14px;overflow:hidden}th,td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:center}th:first-child,td:first-child{text-align:left;font-weight:600}th{color:var(--muted);font-weight:600}
-.ok{color:var(--accent);font-weight:800}.partial{color:#9b7420;font-weight:800}.zero{color:#b14e45;font-weight:800}
-.reset{margin-top:15px;border:1px solid #ddd;background:#fff;border-radius:10px;padding:10px;color:var(--danger)}
-@media(max-width:430px){.wrap{padding:14px 10px 35px}h1{font-size:22px}.row{gap:9px}.time{font-size:11px}}
+:root{--bg:#f5f7f5;--card:#fff;--text:#18201c;--muted:#6f7772;--line:#e2e7e3;--accent:#357663;--accentbg:#e8f2ee;--warn:#8a681f;--warnbg:#fff8e7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
+.app{max-width:720px;margin:auto;padding:16px 13px 32px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:15px}
+h1{font-size:25px;letter-spacing:-.4px;margin:0 0 3px}.subtitle{font-size:13px;color:var(--muted)}
+.today{border:0;background:var(--accent);color:white;border-radius:12px;padding:10px 12px;font-weight:700}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;background:#e9ece9;padding:4px;border-radius:13px;margin-bottom:13px}
+.tab{border:0;background:transparent;border-radius:10px;padding:11px;font-weight:700;color:var(--muted)}.tab.active{background:white;color:var(--text);box-shadow:0 1px 3px #00000012}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:11px}
+.dateRow{display:flex;align-items:center;gap:8px}.arrow{width:42px;height:42px;border:1px solid var(--line);background:white;border-radius:12px;font-size:22px}.date{flex:1}.date b{font-size:17px}.date span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.ringRow{display:flex;align-items:center;gap:14px;margin-top:13px}.ring{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) var(--pct),#e8ece9 0)}.ring:before{content:"";width:51px;height:51px;border-radius:50%;background:white;grid-area:1/1}.ring strong{grid-area:1/1;z-index:1;font-size:15px}.ringText{font-size:13px;color:var(--muted)}.ringText b{display:block;color:var(--text);font-size:15px;margin-bottom:2px}
+.note{background:var(--warnbg);border:1px solid #f0dfae;border-radius:13px;padding:11px 12px;font-size:12px;color:#6c5722;margin-bottom:11px}
+.section{margin:12px 0 6px;font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.task{display:flex;align-items:center;gap:11px;padding:13px 12px;border-bottom:1px solid var(--line);min-height:64px}.task:last-child{border-bottom:0}
+.task input{width:26px;height:26px;accent-color:var(--accent);flex:none}.info{flex:1;min-width:0}.name{font-weight:750;font-size:15px}.detail{font-size:12px;color:var(--muted);margin-top:3px}.pill{font-size:11px;font-weight:750;color:var(--accent);background:var(--accentbg);padding:5px 7px;border-radius:8px;white-space:nowrap}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dow{text-align:center;font-size:10px;color:var(--muted);font-weight:700;padding-bottom:3px}.calday{min-height:57px;border:1px solid var(--line);background:white;border-radius:10px;padding:6px;text-align:left}.calday.muted{opacity:.4}.calday.sel{outline:2px solid var(--accent)}.calnum{font-size:12px;font-weight:800}.mini{height:4px;background:#e6ebe7;border-radius:99px;margin-top:10px;overflow:hidden}.mini i{display:block;height:100%;background:var(--accent);width:0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.stat{background:white;border:1px solid var(--line);border-radius:14px;padding:13px}.stat b{font-size:24px}.stat span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.medbar{margin:9px 0 12px}.medline{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.medline span{color:var(--muted)}.bar{height:7px;background:#e7ebe8;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);width:0}
+.small{font-size:11px;color:var(--muted);line-height:1.45}.reset{margin-top:15px;border:1px solid #e1c9c7;background:white;color:#9a514a;border-radius:11px;padding:10px 12px}
+@media(max-width:360px){h1{font-size:22px}.task{padding:12px 9px}.pill{font-size:10px}.app{padding-left:9px;padding-right:9px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<h1>Skincare & Medication Tracker</h1>
-<div class="sub">September 2026 · Starts Sep 13 · Tap each item when completed</div>
+<div class="app">
+<header class="top"><div><h1>Skin Tracker</h1><div class="subtitle">September 2026 · personal daily checklist</div></div><button class="today" id="todayBtn">Today</button></header>
 
-<div class="tabs">
-<button class="tab active" data-tab="daily">Daily</button>
-<button class="tab" data-tab="summary">Summary</button>
-</div>
+<div class="tabs"><button class="tab active" data-view="daily">Daily</button><button class="tab" data-view="summary">Summary</button></div>
 
-<section id="daily" class="panel active">
-<div class="daynav">
-<button id="prev">‹</button>
-<div class="datebox"><strong id="dateTitle"></strong><span id="dateSub"></span></div>
-<button id="next">›</button>
-</div>
-<div id="procedureNote"></div>
-<div class="card"><div class="progress"><div class="bar" id="bar"></div></div><div id="progressText" style="font-size:12px;color:#73746f;margin-top:7px"></div></div>
-<div class="card" id="tasks"></div>
+<main id="daily">
+<section class="hero">
+<div class="dateRow"><button class="arrow" id="prev">‹</button><div class="date"><b id="dateTitle"></b><span id="dateSub"></span></div><button class="arrow" id="next">›</button></div>
+<div class="ringRow"><div class="ring" id="ring"><strong id="pct">0%</strong></div><div class="ringText"><b id="doneText">0 of 0 completed</b><span>Complete today's scheduled routine</span></div></div>
 </section>
+<div id="note"></div>
+<div id="morning"></div><div id="afternoon"></div><div id="night"></div><div id="other"></div>
+</main>
 
-<section id="summary" class="panel">
-<div class="statgrid" id="stats"></div>
-<div class="card" style="margin-top:12px">
-<strong>September completion</strong>
-<div style="overflow:auto;margin-top:10px"><table><thead><tr><th>Date</th><th>FW</th><th>Depig.</th><th>Moist.</th><th>Sun</th><th>Scalp</th><th>Shamp.</th><th>Tab</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
-</div>
+<main id="summary" style="display:none">
+<div class="stats" id="stats"></div>
+<div class="section">September calendar</div>
+<div class="card" style="padding:10px"><div class="calendar" id="calendar"></div></div>
+<div class="section">Medication / product completion</div>
+<div class="card" style="padding:13px" id="meds"></div>
+<div class="section">Daily detail</div>
+<div class="card" style="padding:10px;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr><th style="text-align:left;padding:6px">Date</th><th>FW</th><th>Depig.</th><th>Moist.</th><th>Sun</th><th>Scalp</th><th>Shamp.</th><th>Tab</th></tr></thead><tbody id="detail"></tbody></table></div>
 <button class="reset" id="reset">Reset all tracker data</button>
-</section>
+<p class="small">Data is stored locally in this browser/device. It is not synced between devices.</p>
+</main>
 </div>
 
 <script>
-const start = new Date(Date.UTC(2026,8,13));
-const end = new Date(Date.UTC(2026,8,30));
-const KEY='skinTrackerSep2026_v1';
-let state=JSON.parse(localStorage.getItem(KEY)||'{}');
-let current=new Date(start);
-
-const tasks=[
-{id:'fw_am',name:'Facewash',detail:'Morning',time:'AM'},
-{id:'dep_am',name:'Depigmentation / Momate',detail:'Morning',time:'AM'},
-{id:'moist_am',name:'Moisturizer',detail:'Morning',time:'AM'},
-{id:'sun_8',name:'Sunscreen',detail:'8:00 AM',time:'8 AM'},
-{id:'sun_11',name:'Sunscreen',detail:'11:00 AM',time:'11 AM'},
-{id:'sun_2',name:'Sunscreen',detail:'2:00 PM',time:'2 PM'},
-{id:'scalp',name:'Scalp lotion',detail:'Alternate nights',time:'Night'},
-{id:'shamp',name:'Shampoo',detail:'Morning after scalp lotion',time:'AM'},
-{id:'fw_pm',name:'Facewash',detail:'Night',time:'PM'},
-{id:'dep_pm',name:'Depigmentation / Momate',detail:'Night',time:'PM'},
-{id:'moist_pm',name:'Moisturizer',detail:'Night',time:'PM'},
-{id:'tablet',name:'Oxiden tablet',detail:'1 tablet after dinner',time:'After dinner'}
+const START=new Date(Date.UTC(2026,8,11)), END=new Date(Date.UTC(2026,8,30)), PROCEDURE=new Date(Date.UTC(2026,8,11));
+const KEY='skin_tracker_sep_2026_v2'; let data=JSON.parse(localStorage.getItem(KEY)||'{}'); let current=new Date(START);
+const defs=[
+{id:'fw_am',n:'Facewash',d:'Morning',p:'Morning'}, {id:'dep_am',n:'Depigmentation cream',d:'Morning',p:'Morning'},
+{id:'mom_am',n:'Momate cream',d:'Morning · use instead of depigmentation cream after procedure',p:'Morning'},
+{id:'moist_am',n:'Moisturizer',d:'Morning',p:'Morning'}, {id:'sun8',n:'Sunscreen',d:'8:00 AM',p:'Morning'},
+{id:'sun11',n:'Sunscreen',d:'11:00 AM',p:'Afternoon'}, {id:'sun2',n:'Sunscreen',d:'2:00 PM',p:'Afternoon'},
+{id:'scalp',n:'Scalp lotion',d:'Alternate nights · starts Sep 11',p:'Night'},
+{id:'shamp',n:'Shampoo',d:'Morning after scalp lotion the night before',p:'Morning'},
+{id:'fw_pm',n:'Facewash',d:'Night',p:'Night'}, {id:'dep_pm',n:'Depigmentation cream',d:'Night',p:'Night'},
+{id:'mom_pm',n:'Momate cream',d:'Night · use instead of depigmentation cream after procedure',p:'Night'},
+{id:'moist_pm',n:'Moisturizer',d:'Night',p:'Night'}, {id:'tablet',n:'Oxiden tablet',d:'1 tablet after dinner',p:'After dinner'}
 ];
-
-function iso(d){return d.toISOString().slice(0,10)}
-function fmt(d){return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})}
-function dayNum(d){return Math.round((d-start)/86400000)}
-function scalpDay(d){return dayNum(d)%2===1} // Sep 14 first scalp-lotion night
-function postProcedure(d){return dayNum(d)>=0 && dayNum(d)<=2}
-function activeTask(t,d){
-  if(t.id.startsWith('sun_')||t.id==='fw_am'||t.id==='fw_pm'||t.id==='moist_am'||t.id==='moist_pm'||t.id==='tablet') return true;
-  if(t.id==='scalp') return scalpDay(d);
-  if(t.id==='shamp') return scalpDay(new Date(d.getTime()-86400000));
-  if(t.id==='dep_am'||t.id==='dep_pm') return true;
-  return true;
+function iso(d){return d.toISOString().slice(0,10)} function nday(d){return Math.round((d-START)/86400000)}
+function proc(d){return nday(d)<=2} function scalp(d){return nday(d)>=2 && nday(d)%2===0} // Sep13,15,17...
+function sday(d){return data[iso(d)]||{}}
+function active(t,d){
+ if(t.id==='mom_am'||t.id==='mom_pm')return proc(d);
+ if(t.id==='dep_am'||t.id==='dep_pm')return !proc(d);
+ if(t.id==='scalp')return scalp(d);
+ if(t.id==='shamp'){let prev=new Date(d-86400000);return scalp(prev)}
+ return true;
 }
-function storageDay(d){return state[iso(d)]||{}}
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function renderDaily(){
- const k=iso(current), s=storageDay(current);
- document.getElementById('dateTitle').textContent=fmt(current);
- document.getElementById('dateSub').textContent=k;
- let note='';
- if(postProcedure(current)) note='<div class="note"><b>Post-procedure:</b> Use Momate cream instead of the depigmentation cream today. This is day '+(dayNum(current)+1)+' of 3.</div>';
- else note='<div class="note">Depigmentation cream is active today.</div>';
- document.getElementById('procedureNote').innerHTML=note;
- const wrap=document.getElementById('tasks'); wrap.innerHTML='';
- let active=0,done=0;
- tasks.forEach(t=>{
-   let a=activeTask(t,current);
-   // shampoo is active only if today follows a scalp-lotion night
-   if(t.id==='shamp') a=scalpDay(new Date(current.getTime()-86400000));
-   if(!a)return;
-   active++;
-   const checked=!!s[t.id]; if(checked)done++;
-   let detail=t.detail;
-   if((t.id==='dep_am'||t.id==='dep_pm')&&postProcedure(current)) detail='Momate instead (post-procedure)';
-   if(t.id==='shamp') detail='After scalp lotion last night';
-   const row=document.createElement('label'); row.className='row';
-   row.innerHTML='<input class="check" type="checkbox" '+(checked?'checked':'')+'><div class="info"><div class="name">'+t.name+'</div><div class="detail">'+detail+'</div></div><div class="time">'+t.time+'</div>';
-   row.querySelector('input').addEventListener('change',e=>{state[k]=state[k]||{};state[k][t.id]=e.target.checked;save();renderDaily()});
-   wrap.appendChild(row);
- });
- const pct=active?Math.round(done/active*100):0;
- document.getElementById('bar').style.width=pct+'%';
- document.getElementById('progressText').textContent=done+' of '+active+' completed · '+pct+'%';
- document.getElementById('prev').disabled=current<=start;
- document.getElementById('next').disabled=current>=end;
+function fmt(d){return d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'})}
+function tasksFor(d){return defs.filter(t=>active(t,d))}
+function completion(d){let ts=tasksFor(d),s=sday(d),done=ts.filter(t=>s[t.id]).length;return [done,ts.length]}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function taskEl(t,d){
+ const s=sday(d), lab=document.createElement('label');lab.className='task';
+ lab.innerHTML='<input type="checkbox" '+(s[t.id]?'checked':'')+'><div class="info"><div class="name">'+t.n+'</div><div class="detail">'+t.d+'</div></div><span class="pill">'+(t.p==='After dinner'?'Dinner':t.d.includes('8:00')?'8 AM':t.d.includes('11:00')?'11 AM':t.d.includes('2:00')?'2 PM':t.p)+'</span>';
+ lab.querySelector('input').addEventListener('change',e=>{data[iso(d)]=data[iso(d)]||{};data[iso(d)][t.id]=e.target.checked;save();render()});return lab;
+}
+function render(){
+ const k=iso(current), [done,total]=completion(current), pct=total?Math.round(done/total*100):0;
+ document.getElementById('dateTitle').textContent=fmt(current);document.getElementById('dateSub').textContent=k;
+ document.getElementById('pct').textContent=pct+'%';document.getElementById('doneText').textContent=done+' of '+total+' completed';
+ document.getElementById('ring').style.setProperty('--pct',pct+'%');
+ document.getElementById('prev').disabled=current<=START;document.getElementById('next').disabled=current>=END;
+ document.getElementById('note').innerHTML=proc(current)?'<div class="note"><b>Procedure recovery:</b> Sep 11–13 are the first 3 days after the procedure. Use <b>Momate</b> instead of the depigmentation cream.</div>':'<div class="note">Depigmentation cream is scheduled morning and night.</div>';
+ ['morning','afternoon','night','other'].forEach(x=>document.getElementById(x).innerHTML='');
+ const order=[['Morning','morning'],['Afternoon','afternoon'],['Night','night'],['After dinner','other']];
+ order.forEach(([p,id])=>{let ts=tasksFor(current).filter(t=>t.p===p);if(!ts.length)return;let h=document.createElement('div');h.className='section';h.textContent=p;document.getElementById(id).appendChild(h);let c=document.createElement('div');c.className='card';ts.forEach(t=>c.appendChild(taskEl(t,current)));document.getElementById(id).appendChild(c)});
 }
 function renderSummary(){
- const rows=document.getElementById('summaryBody'); rows.innerHTML='';
- let total=0,completed=0,days=0;
- for(let i=0;i<=17;i++){
-   const d=new Date(start.getTime()+i*86400000), s=storageDay(d);
-   let cells=[];
-   const groups=[
-     ['fw_am','fw_pm'],['dep_am','dep_pm'],['moist_am','moist_pm'],
-     ['sun_8','sun_11','sun_2'],['scalp'],['shamp'],['tablet']
-   ];
-   groups.forEach(g=>{
-     const active=g.filter(id=>tasks.find(t=>t.id===id)&&activeTask(tasks.find(t=>t.id===id),d));
-     const n=active.filter(id=>s[id]).length;
-     total+=active.length; completed+=n;
-     cells.push(active.length===0?'—':n===active.length?'✓':n?'•':'–');
-   });
-   if(cells.some(x=>x!=='—'))days++;
-   const tr=document.createElement('tr');
-   tr.innerHTML='<td>'+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',timeZone:'UTC'})+'</td>'+cells.map(x=>'<td class="'+(x==='✓'?'ok':x==='•'?'partial':x==='–'?'zero':'')+'">'+x+'</td>').join('');
-   rows.appendChild(tr);
- }
- const pct=total?Math.round(completed/total*100):0;
- document.getElementById('stats').innerHTML=
- '<div class="stat"><b>'+pct+'%</b><span>Overall completion</span></div>'+
- '<div class="stat"><b>'+completed+'</b><span>Tasks completed</span></div>'+
- '<div class="stat"><b>'+total+'</b><span>Scheduled tasks</span></div>'+
- '<div class="stat"><b>'+days+'</b><span>Days tracked</span></div>';
+ let total=0,done=0,days=0;
+ for(let d=new Date(START);d<=END;d=new Date(d.getTime()+86400000)){let [a,b]=completion(d);total+=b;done+=a;if(a)days++}
+ let pct=total?Math.round(done/total*100):0;
+ document.getElementById('stats').innerHTML='<div class="stat"><b>'+pct+'%</b><span>Overall completion</span></div><div class="stat"><b>'+done+'</b><span>Tasks completed</span></div><div class="stat"><b>'+total+'</b><span>Scheduled tasks</span></div><div class="stat"><b>'+days+'</b><span>Days with progress</span></div>';
+ let cal=document.getElementById('calendar');cal.innerHTML='';['S','M','T','W','T','F','S'].forEach(x=>{let e=document.createElement('div');e.className='dow';e.textContent=x;cal.appendChild(e)});
+ let first=new Date(Date.UTC(2026,8,1));for(let i=0;i<first.getUTCDay();i++){let e=document.createElement('div');e.className='calday muted';cal.appendChild(e)}
+ for(let i=1;i<=30;i++){let d=new Date(Date.UTC(2026,8,i)),e=document.createElement('button');e.className='calday '+(iso(d)===iso(current)?'sel':'');let [a,b]=completion(d),p=b?Math.round(a/b*100):0;e.innerHTML='<div class="calnum">'+i+'</div><div class="mini"><i style="width:'+p+'%"></i></div>';e.addEventListener('click',()=>{if(d>=START&&d<=END){current=d;switchView('daily')}});cal.appendChild(e)}
+ const med=document.getElementById('meds');med.innerHTML='';
+ const groups=[['Facewash',['fw_am','fw_pm']],['Depigmentation / Momate',['dep_am','dep_pm','mom_am','mom_pm']],['Moisturizer',['moist_am','moist_pm']],['Sunscreen',['sun8','sun11','sun2']],['Scalp lotion',['scalp']],['Shampoo',['shamp']],['Oxiden tablet',['tablet']]];
+ groups.forEach(([name,ids])=>{let scheduled=0,completed=0;for(let d=new Date(START);d<=END;d=new Date(d.getTime()+86400000)){ids.forEach(id=>{let t=defs.find(x=>x.id===id);if(active(t,d)){scheduled++;if(sday(d)[id])completed++}})}let p=scheduled?Math.round(completed/scheduled*100):0;let e=document.createElement('div');e.className='medbar';e.innerHTML='<div class="medline"><b>'+name+'</b><span>'+completed+'/'+scheduled+' · '+p+'%</span></div><div class="bar"><i style="width:'+p+'%"></i></div>';med.appendChild(e)});
+ const body=document.getElementById('detail');body.innerHTML='';
+ for(let d=new Date(START);d<=END;d=new Date(d.getTime()+86400000)){let s=sday(d), groups=[['fw_am','fw_pm'],['dep_am','dep_pm','mom_am','mom_pm'],['moist_am','moist_pm'],['sun8','sun11','sun2'],['scalp'],['shamp'],['tablet']];let tr=document.createElement('tr');tr.innerHTML='<td style="padding:6px 4px">'+d.getUTCDate()+' Sep</td>'+groups.map(g=>{let a=g.filter(id=>active(defs.find(t=>t.id===id),d)),n=a.filter(id=>s[id]).length;return '<td style="padding:6px 3px;font-weight:700">'+(a.length&&n===a.length?'✓':n?'•':'–')+'</td>'}).join('');body.appendChild(tr)}
 }
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
- document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');
- document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.tab).classList.add('active');
- if(b.dataset.tab==='summary')renderSummary();
-}));
-document.getElementById('prev').addEventListener('click',()=>{current=new Date(current.getTime()-86400000);renderDaily()});
-document.getElementById('next').addEventListener('click',()=>{current=new Date(current.getTime()+86400000);renderDaily()});
-document.getElementById('reset').addEventListener('click',()=>{if(confirm('Reset all September tracker data?')){state={};save();renderSummary();renderDaily()}});
-renderDaily();
+function switchView(v){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.getElementById('daily').style.display=v==='daily'?'block':'none';document.getElementById('summary').style.display=v==='summary'?'block':'none';if(v==='summary')renderSummary();render()}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+document.getElementById('prev').addEventListener('click',()=>{if(current>START){current=new Date(current-86400000);render()}});
+document.getElementById('next').addEventListener('click',()=>{if(current<END){current=new Date(current.getTime()+86400000);render()}});
+document.getElementById('todayBtn').addEventListener('click',()=>{current=new Date(Date.UTC(2026,8,11));render()});
+document.getElementById('reset').addEventListener('click',()=>{if(confirm('Reset all September tracker data?')){data={};save();renderSummary();render()}});
+render();
 </script>
-</body></html>
+</body>
+</html>
