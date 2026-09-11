@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f7f5">
+<title>Skincare & Medication Tracker — Sep 2026</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--text:#20211f;--muted:#73746f;--line:#e5e5df;--accent:#2f6f5e;--accent2:#e9f3ef;--danger:#a34d45}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:18px 14px 40px}
+h1{font-size:25px;margin:5px 0 4px}.sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}.tab{flex:1;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;font-weight:700}
+.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.panel{display:none}.panel.active{display:block}
+.daynav{display:flex;gap:8px;align-items:center;margin-bottom:12px}.daynav button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px}.datebox{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px}
+.datebox strong{display:block}.datebox span{font-size:12px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:10px 0;padding:14px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
+.check{width:25px;height:25px;accent-color:var(--accent);flex:none}.info{flex:1;min-width:0}.name{font-weight:700}.detail{font-size:12px;color:var(--muted);margin-top:3px}.time{font-size:12px;color:var(--accent);font-weight:700}
+.skip{opacity:.5}.note{font-size:12px;background:#fff8e8;border:1px solid #f0dfb0;padding:10px;border-radius:11px;color:#6f5a24;margin-top:8px}
+.progress{height:9px;background:#ecece7;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--accent);width:0}
+.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:24px}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:14px;overflow:hidden}th,td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:center}th:first-child,td:first-child{text-align:left;font-weight:600}th{color:var(--muted);font-weight:600}
+.ok{color:var(--accent);font-weight:800}.partial{color:#9b7420;font-weight:800}.zero{color:#b14e45;font-weight:800}
+.reset{margin-top:15px;border:1px solid #ddd;background:#fff;border-radius:10px;padding:10px;color:var(--danger)}
+@media(max-width:430px){.wrap{padding:14px 10px 35px}h1{font-size:22px}.row{gap:9px}.time{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Skincare & Medication Tracker</h1>
+<div class="sub">September 2026 · Starts Sep 13 · Tap each item when completed</div>
+
+<div class="tabs">
+<button class="tab active" data-tab="daily">Daily</button>
+<button class="tab" data-tab="summary">Summary</button>
+</div>
+
+<section id="daily" class="panel active">
+<div class="daynav">
+<button id="prev">‹</button>
+<div class="datebox"><strong id="dateTitle"></strong><span id="dateSub"></span></div>
+<button id="next">›</button>
+</div>
+<div id="procedureNote"></div>
+<div class="card"><div class="progress"><div class="bar" id="bar"></div></div><div id="progressText" style="font-size:12px;color:#73746f;margin-top:7px"></div></div>
+<div class="card" id="tasks"></div>
+</section>
+
+<section id="summary" class="panel">
+<div class="statgrid" id="stats"></div>
+<div class="card" style="margin-top:12px">
+<strong>September completion</strong>
+<div style="overflow:auto;margin-top:10px"><table><thead><tr><th>Date</th><th>FW</th><th>Depig.</th><th>Moist.</th><th>Sun</th><th>Scalp</th><th>Shamp.</th><th>Tab</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
+</div>
+<button class="reset" id="reset">Reset all tracker data</button>
+</section>
+</div>
+
+<script>
+const start = new Date(Date.UTC(2026,8,13));
+const end = new Date(Date.UTC(2026,8,30));
+const KEY='skinTrackerSep2026_v1';
+let state=JSON.parse(localStorage.getItem(KEY)||'{}');
+let current=new Date(start);
+
+const tasks=[
+{id:'fw_am',name:'Facewash',detail:'Morning',time:'AM'},
+{id:'dep_am',name:'Depigmentation / Momate',detail:'Morning',time:'AM'},
+{id:'moist_am',name:'Moisturizer',detail:'Morning',time:'AM'},
+{id:'sun_8',name:'Sunscreen',detail:'8:00 AM',time:'8 AM'},
+{id:'sun_11',name:'Sunscreen',detail:'11:00 AM',time:'11 AM'},
+{id:'sun_2',name:'Sunscreen',detail:'2:00 PM',time:'2 PM'},
+{id:'scalp',name:'Scalp lotion',detail:'Alternate nights',time:'Night'},
+{id:'shamp',name:'Shampoo',detail:'Morning after scalp lotion',time:'AM'},
+{id:'fw_pm',name:'Facewash',detail:'Night',time:'PM'},
+{id:'dep_pm',name:'Depigmentation / Momate',detail:'Night',time:'PM'},
+{id:'moist_pm',name:'Moisturizer',detail:'Night',time:'PM'},
+{id:'tablet',name:'Oxiden tablet',detail:'1 tablet after dinner',time:'After dinner'}
+];
+
+function iso(d){return d.toISOString().slice(0,10)}
+function fmt(d){return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})}
+function dayNum(d){return Math.round((d-start)/86400000)}
+function scalpDay(d){return dayNum(d)%2===1} // Sep 14 first scalp-lotion night
+function postProcedure(d){return dayNum(d)>=0 && dayNum(d)<=2}
+function activeTask(t,d){
+  if(t.id.startsWith('sun_')||t.id==='fw_am'||t.id==='fw_pm'||t.id==='moist_am'||t.id==='moist_pm'||t.id==='tablet') return true;
+  if(t.id==='scalp') return scalpDay(d);
+  if(t.id==='shamp') return scalpDay(new Date(d.getTime()-86400000));
+  if(t.id==='dep_am'||t.id==='dep_pm') return true;
+  return true;
+}
+function storageDay(d){return state[iso(d)]||{}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function renderDaily(){
+ const k=iso(current), s=storageDay(current);
+ document.getElementById('dateTitle').textContent=fmt(current);
+ document.getElementById('dateSub').textContent=k;
+ let note='';
+ if(postProcedure(current)) note='<div class="note"><b>Post-procedure:</b> Use Momate cream instead of the depigmentation cream today. This is day '+(dayNum(current)+1)+' of 3.</div>';
+ else note='<div class="note">Depigmentation cream is active today.</div>';
+ document.getElementById('procedureNote').innerHTML=note;
+ const wrap=document.getElementById('tasks'); wrap.innerHTML='';
+ let active=0,done=0;
+ tasks.forEach(t=>{
+   let a=activeTask(t,current);
+   // shampoo is active only if today follows a scalp-lotion night
+   if(t.id==='shamp') a=scalpDay(new Date(current.getTime()-86400000));
+   if(!a)return;
+   active++;
+   const checked=!!s[t.id]; if(checked)done++;
+   let detail=t.detail;
+   if((t.id==='dep_am'||t.id==='dep_pm')&&postProcedure(current)) detail='Momate instead (post-procedure)';
+   if(t.id==='shamp') detail='After scalp lotion last night';
+   const row=document.createElement('label'); row.className='row';
+   row.innerHTML='<input class="check" type="checkbox" '+(checked?'checked':'')+'><div class="info"><div class="name">'+t.name+'</div><div class="detail">'+detail+'</div></div><div class="time">'+t.time+'</div>';
+   row.querySelector('input').addEventListener('change',e=>{state[k]=state[k]||{};state[k][t.id]=e.target.checked;save();renderDaily()});
+   wrap.appendChild(row);
+ });
+ const pct=active?Math.round(done/active*100):0;
+ document.getElementById('bar').style.width=pct+'%';
+ document.getElementById('progressText').textContent=done+' of '+active+' completed · '+pct+'%';
+ document.getElementById('prev').disabled=current<=start;
+ document.getElementById('next').disabled=current>=end;
+}
+function renderSummary(){
+ const rows=document.getElementById('summaryBody'); rows.innerHTML='';
+ let total=0,completed=0,days=0;
+ for(let i=0;i<=17;i++){
+   const d=new Date(start.getTime()+i*86400000), s=storageDay(d);
+   let cells=[];
+   const groups=[
+     ['fw_am','fw_pm'],['dep_am','dep_pm'],['moist_am','moist_pm'],
+     ['sun_8','sun_11','sun_2'],['scalp'],['shamp'],['tablet']
+   ];
+   groups.forEach(g=>{
+     const active=g.filter(id=>tasks.find(t=>t.id===id)&&activeTask(tasks.find(t=>t.id===id),d));
+     const n=active.filter(id=>s[id]).length;
+     total+=active.length; completed+=n;
+     cells.push(active.length===0?'—':n===active.length?'✓':n?'•':'–');
+   });
+   if(cells.some(x=>x!=='—'))days++;
+   const tr=document.createElement('tr');
+   tr.innerHTML='<td>'+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',timeZone:'UTC'})+'</td>'+cells.map(x=>'<td class="'+(x==='✓'?'ok':x==='•'?'partial':x==='–'?'zero':'')+'">'+x+'</td>').join('');
+   rows.appendChild(tr);
+ }
+ const pct=total?Math.round(completed/total*100):0;
+ document.getElementById('stats').innerHTML=
+ '<div class="stat"><b>'+pct+'%</b><span>Overall completion</span></div>'+
+ '<div class="stat"><b>'+completed+'</b><span>Tasks completed</span></div>'+
+ '<div class="stat"><b>'+total+'</b><span>Scheduled tasks</span></div>'+
+ '<div class="stat"><b>'+days+'</b><span>Days tracked</span></div>';
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+ document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.tab).classList.add('active');
+ if(b.dataset.tab==='summary')renderSummary();
+}));
+document.getElementById('prev').addEventListener('click',()=>{current=new Date(current.getTime()-86400000);renderDaily()});
+document.getElementById('next').addEventListener('click',()=>{current=new Date(current.getTime()+86400000);renderDaily()});
+document.getElementById('reset').addEventListener('click',()=>{if(confirm('Reset all September tracker data?')){state={};save();renderSummary();renderDaily()}});
+renderDaily();
+</script>
+</body></html>
